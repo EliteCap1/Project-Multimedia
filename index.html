@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Digital Clock with Themes</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="theme-neon">
+<body class="theme-light">
 
-  <h1>Digital Clock PRO</h1>
+  <h1>Digital Clock</h1>
 
   <div class="clock">
-    <span>12</span> :
-    <span>34</span> :
-    <span>56</span>
+    <canvas id="clock-canvas" width="300" height="100"></canvas>
   </div>
 
   <div class="theme-buttons">
     <p>Choose a theme:</p>
-    <button>Dark</button>
-    <button>Light</button>
-    <button>Neon</button>
+    <button id="btn-dark">Dark</button>
+    <button id="btn-light">Light</button>
+    <button id="btn-rainbow">Rainbow</button>
   </div>
 
+  <script src="script.js"></script>
 </body>
 </html>

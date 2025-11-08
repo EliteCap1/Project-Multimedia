@@ -10,16 +10,6 @@ body {
     transition: background 0.5s, color 0.5s;
   }
   
- 
-  .clock {
-    font-size: 3em;
-    padding: 20px 40px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-
   .theme-buttons {
     margin-top: 30px;
     text-align: center;
@@ -44,9 +34,9 @@ body {
     color: #111;
   }
   
-  .theme-neon {
-    background: #111;
-    color: #14efff;
-    text-shadow: 0 0 10px #2414ff;
+  .theme-rainbow {
+    background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+    color: #fff;
   }
-  
+
+
