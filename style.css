@@ -1,42 +1,64 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Times New Roman', Times, serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    transition: background 0.5s, color 0.5s;
-  }
-  
-  .theme-buttons {
-    margin-top: 30px;
-    text-align: center;
-  }
-  
-  .theme-buttons button {
-    margin: 5px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1em;
-    cursor: pointer;
-  }
-  
-  .theme-dark {
-    background: #111;
-    color: #fff;
-  }
-  
-  .theme-light {
-    background: #fff;
-    color: #111;
-  }
-  
-  .theme-rainbow {
-    background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-    color: #fff;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  transition: background 0.5s, color 0.5s;
+}
 
+.theme-buttons,
+.controls {
+  margin-top: 20px;
+  text-align: center;
+}
 
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.3s;
+
+  background-color: #fff;
+  color: #333;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+#btn-voice {
+  font-weight: bold;
+  border: 2px solid #ccc;
+}
+
+.voice-on {
+  background-color: #008000;
+  color: #fff;
+}
+
+.voice-off {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.theme-dark {
+  background: #111;
+  color: #fff;
+}
+
+.theme-light {
+  background: #fff;
+  color: #111;
+}
+
+.theme-rainbow {
+  background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  color: #fff;
+}

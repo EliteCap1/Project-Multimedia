@@ -1,73 +1,91 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
-    const bodyElement = document.body;
-    const btnDark = document.getElementById('btn-dark');
-    const btnLight = document.getElementById('btn-light');
-    const btnRainbow = document.getElementById('btn-rainbow');
-    let prevTheme = '';
-    let currentTheme = 'theme-light';
-
-    function switchTheme(theme) {
-        bodyElement.classList.remove('theme-light', 'theme-dark', 'theme-rainbow');
-        bodyElement.classList.add(theme);
-        prevTheme = currentTheme;
-        currentTheme = theme;
-        drawClock(); 
-    }
-
-    if (btnDark) {
-        btnDark.addEventListener('click', () => switchTheme('theme-dark'));
-    }
-    if (btnLight) {
-        btnLight.addEventListener('click', () => switchTheme('theme-light'));
-    }
-    if (btnRainbow) {
-        btnRainbow.addEventListener('click', () => switchTheme('theme-rainbow'));
-    }
-
-    // Selecting the canvas from the html
+    const body = document.body;
     const canvas = document.getElementById('clock-canvas');
     const ctx = canvas.getContext('2d');
+    
+    // Variabile pentru starea aplicatiei
+    let currentTheme = 'theme-light';
+    let isVoiceEnabled = false;
+    let lastMinute = new Date().getMinutes();
 
-    // Arrow Function for adding 0 in front
-    const pad = (num) => String(num).padStart(2, '0');
+  
+
+    // Adauga zero in fata daca numarul e mai mic de 10
+    function pad(num) {
+        return String(num).padStart(2, '0');
+    }
+
+    // Functia care transforma textul în sunet
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    // Functia care schimba tema vizuala
+    function switchTheme(newTheme) {
+        body.classList.remove('theme-light', 'theme-dark', 'theme-rainbow');
+        body.classList.add(newTheme);
+        currentTheme = newTheme;
+        drawClock();
+    }
 
     function drawClock() {
-        // Get current time
         const now = new Date();
-        const hours = pad(now.getHours());
-        const minutes = pad(now.getMinutes());
-        const seconds = pad(now.getSeconds());
-        const timeString = `${hours}:${minutes}:${seconds}`;
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
 
-        // Erase the canvas
+        // Verificam daca trebuie sa vorbeasca 
+        if (minutes !== lastMinute) {
+            lastMinute = minutes;
+            if (isVoiceEnabled) {
+                speak(`It is ${hours} ${minutes}`);
+            }
+        }
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        //We modify the theme if necessary
-        
-        if(prevTheme !== currentTheme){
+        ctx.font = 'bold 50px "Times New Roman"';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
-            ctx.font = 'bold 50px "Times New Roman"';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-
-            // Chose text color based on theme
-            if (currentTheme === 'theme-light') {
-                ctx.fillStyle = '#111'; 
-            } 
-            else if (currentTheme === 'theme-dark') {
-                ctx.fillStyle = '#FFF'; 
-            } 
-            else if (currentTheme === 'theme-rainbow') {
-                ctx.fillStyle = '#111';
-            }
-
-            
+        // Alegem culoarea în functie de tema
+        if (currentTheme === 'theme-light') {
+            ctx.fillStyle = '#111';
+        } else {
+            ctx.fillStyle = '#fff';
         }
+
+        const timeString = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
         ctx.fillText(timeString, canvas.width / 2, canvas.height / 2);
     }
-    //Starting the clock
+
+    
+    // Setam ceasul sa se actualizeze la fiecare secunda
     setInterval(drawClock, 1000);
     drawClock();
+
+    // Butoanele de tema
+    document.getElementById('btn-dark').onclick = () => switchTheme('theme-dark');
+    document.getElementById('btn-light').onclick = () => switchTheme('theme-light');
+    document.getElementById('btn-rainbow').onclick = () => switchTheme('theme-rainbow');
+
+    // Butonul de voce
+    const btnVoice = document.getElementById('btn-voice');
+    btnVoice.onclick = () => {
+        isVoiceEnabled = !isVoiceEnabled;
+        
+        if (isVoiceEnabled) {
+            btnVoice.textContent = "🔊 Voice ON";
+            btnVoice.className = "voice-on";
+            speak("Voice activated");
+        } else {
+            btnVoice.textContent = "🔇 Enable Voice";
+            btnVoice.className = "voice-off";
+        }
+    };
 });
